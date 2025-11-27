@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Calendrier de l'Avent TG1</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <main class="stage">
+    <h1 class="title">🎄 Calendrier de l'Avent — TG1 🎄</h1>
+    <p class="subtitle">Clique sur ton flocon du jour (nom → énigme → réponse).</p>
+
+    <div id="scene" class="scene"></div>
+  </main>
+
+  <!-- Modal -->
+  <div id="modal" class="modal hidden" role="dialog">
+    <div class="modal-card">
+      <button id="modal-close" class="modal-close">✕</button>
+
+      <!-- Étape nom -->
+      <div id="step-name" class="modal-step">
+        <h2 id="modal-title">Entre ton nom</h2>
+        <input id="input-name" type="text" placeholder="Prénom Nom">
+        <p id="modal-msg" class="modal-msg"></p>
+        <div class="modal-actions">
+          <button id="to-enigme" class="btn">Suivant</button>
+        </div>
+      </div>
+
+      <!-- Étape énigme -->
+      <div id="step-enigme" class="modal-step hidden">
+        <h2 id="modal-title-enigme"></h2>
+        <p id="enigme-text"></p>
+        <input id="input-answer" type="text" placeholder="Ta réponse...">
+        <p id="modal-msg-2" class="modal-msg"></p>
+        <div class="modal-actions">
+          <button id="send-answer" class="btn">Envoyer</button>
+        </div>
+      </div>
+
+      <!-- Étape fin -->
+      <div id="step-done" class="modal-step hidden">
+        <h2>Merci !</h2>
+        <p id="done-text">Ta réponse a bien été envoyée.</p>
+        <div class="modal-actions">
+          <button id="done-close" class="btn">Fermer</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
