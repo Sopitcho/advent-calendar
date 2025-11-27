@@ -79,8 +79,6 @@ jours.forEach((day,i)=>{
   fl.addEventListener("click",()=> onFlake(day));
   scene.appendChild(fl);
 });
-// MODE TEST — Ouvre tous les jours
-const today = new Date(2025, 11, 19, 12, 0, 0); 
 
 ////////////////////////////
 // MODAL + FLOW
