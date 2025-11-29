@@ -3,6 +3,9 @@
 ////////////////////////////
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbze6o-6VO-NSqDIthSS0xocC5sspPm_q63lUe17QeWVHr8ptEF3cqtcNkbuuzreEfgsgg/exec";
 
+// MODE TEST → simule le 19 décembre
+const today = new Date(2025, 11, 19, 12, 0, 0);
+
 const jours = [1,2,3,4,5,8,9,10,11,12,15,16,17,18,19];
  
 const enigmes = {
@@ -47,7 +50,8 @@ const positions = [
 ////////////////////////////
 const scene = document.getElementById("scene");
 
-const today = new Date();
+// const today = new Date(); // désactivé pour tests
+
 const year = today.getFullYear();
 const month = 11; // décembre
 
