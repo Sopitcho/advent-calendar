@@ -6,7 +6,7 @@
 
 /* ========== CONFIG ========== */
 // URL de ton Apps Script (WebApp)
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzQ_oXu98WCgXzsGZ96xzd4wMzZ95MUZ9WYzSLxtoAajM5LXT8guwu4NKafykSfqwoJHg/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz3o7kxX_fYzQiRRyxt2m4BK0UYDAE6GeZJr5_p68a6BpbLbuWEysjp3tnMsbIfjtOxzA/exec";
 
 // Ouvre la case seulement à partir de cette heure (ex: 16 = 16:00)
 const HEURE_OUVERTURE = 12; // change si tu veux (ex: 9, 16...)
