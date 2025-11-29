@@ -193,3 +193,28 @@ document.getElementById("send-answer").onclick=async ()=>{
     msg2.textContent="Erreur de connexion.";
   }
 };
+// =========================
+// MODE ADMIN SECRET
+// =========================
+let simulatedDay = null;
+
+document.addEventListener("keydown", (e)=>{
+  if(e.key === "A"){ 
+    const d = prompt("Jour à simuler ? (1-24)");
+    if(d && !isNaN(d)){
+      simulatedDay = parseInt(d);
+      alert("Simu activée : Jour " + simulatedDay);
+    }
+  }
+});
+
+// remplace : const today = new Date();
+// par :
+let today = new Date();
+
+function getToday(){
+  if(simulatedDay !== null){
+    return new Date(year, month, simulatedDay, 12, 0, 0);
+  }
+  return new Date();
+}
