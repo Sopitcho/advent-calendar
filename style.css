@@ -35,12 +35,6 @@ body::after {
   z-index: 0;
 }
 
-
-.stage {
-  padding: 20px 15px 60px;
-  text-align: center;
-  position: relative;
-  z-index: 2;
 }
 .stage {
   padding-top: 20px;       /* avant : 150px sans le vouloir */
