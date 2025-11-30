@@ -6,7 +6,7 @@
 
 /* ========== CONFIG ========== */
 // URL de ton Apps Script (WebApp)
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbze6o-6VO-NSqDIthSS0xocC5sspPm_q63lUe17QeWVHr8ptEF3cqtcNkbuuzreEfgsgg/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbweehPoUPK4731aZ27siiFAp_SpSfDKQ3-q58XI0gCBF727lC4LSN_ZqZ0lKEbmq0f04A/exec";
 
 // Ouvre la case seulement à partir de cette heure (ex: 16 = 16:00)
 const HEURE_OUVERTURE = 12; // change si tu veux (ex: 9, 16...)
@@ -282,12 +282,4 @@ initSnow();
 setInterval(drawSnow, 33);
 window.addEventListener("resize", initSnow);
 
-/* ========== UTILITAIRES ========== */
-/* Pour re-générer l'affichage si tu changes manuellement MODE_TEST / JOUR_SIMULE */
-function rafraichir(){
-  genererFlocons();
-}
-
-/* expose pour console si besoin */
-window._calendrier = { genererFlocons, obtenirDateActuelle, rafraichir };
 
