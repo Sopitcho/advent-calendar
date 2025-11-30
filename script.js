@@ -1,16 +1,16 @@
 /* ===========================
    Calendrier — script principal
-   Tout en français, responsive,
-   mode test + admin (touche "A")
+   Français — responsive — mode test/admin
    =========================== */
 
 /* ========== CONFIG ========== */
 // URL de ton Apps Script (WebApp)
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbweehPoUPK4731aZ27siiFAp_SpSfDKQ3-q58XI0gCBF727lC4LSN_ZqZ0lKEbmq0f04A/exec";
 
-// Ouvre la case seulement à partir de cette heure (ex: 16 = 16:00)
-const HEURE_OUVERTURE = 12; // change si tu veux (ex: 9, 16...)
+// Heure d'ouverture (ex : 12 = midi)
+const HEURE_OUVERTURE = 12;
 
+// Jours (1..19 sans week-ends)
 const JOURS = [1,2,3,4,5,8,9,10,11,12,15,16,17,18,19];
 
 const ENIGMES = {
@@ -31,7 +31,7 @@ const ENIGMES = {
   19:"Énigme 19..."
 };
 
-/* positions visuelles (réutilisées pour placer les flocons) */
+/* positions visuelles */
 const POSITIONS = [
   {left:"10%", top:"8%"},
   {left:"78%", top:"10%"},
@@ -51,11 +51,11 @@ const POSITIONS = [
 ];
 
 /* ========== MODE TEST & ADMIN ========== */
-/* true = mode test activé (simule jour+heure). Mettre false en prod */
+/* true = mode test activé (simule jour+heure). Mets false en production */
 let MODE_TEST = true;
 
 /* jour et heure simulés (si MODE_TEST = true) */
-let JOUR_SIMULE = 5;   // change le jour ici pour tester
+let JOUR_SIMULE = 5;   // change le jour ici pour tester (ou appuie sur "A")
 let HEURE_SIMULE = 12; // change l'heure simulée
 
 /* admin secret : appuie sur "A" pour saisir un jour (prompt) */
@@ -66,6 +66,7 @@ document.addEventListener("keydown", (e) => {
     if (j.trim() === "") {
       MODE_TEST = false;
       alert("Mode test désactivé.");
+      window.location.reload();
       return;
     }
     const jj = parseInt(j);
@@ -73,7 +74,6 @@ document.addEventListener("keydown", (e) => {
       MODE_TEST = true;
       JOUR_SIMULE = jj;
       alert("Mode test activé → jour simulé : " + JOUR_SIMULE);
-      // re-génère l'affichage (optionnel : reload)
       window.location.reload();
     }
   }
@@ -156,8 +156,7 @@ function onFlakeClick(jour, element){
   const dateUtilisee = obtenirDateActuelle();
 
   if (dateUtilisee < dateCase) {
-    // Pas encore ouvert : préciser l'heure exacte (lisible)
-    const options = { weekday:'short', year:'numeric', month:'short', day:'numeric' };
+    // Pas encore ouvert : préciser l'heure exacte
     alert(`Trop tôt — l'énigme s'ouvrira le ${dateCase.toLocaleDateString()} à ${HEURE_OUVERTURE}h.`);
     return;
   }
@@ -193,7 +192,6 @@ document.getElementById("to-enigme").onclick = () => {
 
   titreEnigme.textContent = `Jour ${caseOuverte}`;
   texteEnigme.textContent = ENIGMES[caseOuverte] || "Aucune énigme définie.";
-  // focus sur la réponse pour console mobile
   setTimeout(()=> inputReponse.focus(), 120);
 };
 
@@ -217,7 +215,6 @@ document.getElementById("send-answer").onclick = async () => {
       body: JSON.stringify(payload)
     });
 
-    // parse la réponse (Apps Script renvoie du JSON)
     const data = await res.json();
 
     if (data.status === "already") {
@@ -227,7 +224,6 @@ document.getElementById("send-answer").onclick = async () => {
     if (data.status === "ok") {
       etapeEnigme.classList.add("hidden");
       etapeFini.classList.remove("hidden");
-      // désactiver visuellement la case
       const fl = document.querySelector(`.flake[data-jour='${caseOuverte}']`);
       if (fl) { fl.classList.add("passe"); fl.style.pointerEvents = "none"; }
       return;
