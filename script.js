@@ -264,7 +264,7 @@ function drawSnow(){
     ctx.arc(f.x,f.y,f.r,0,Math.PI*2);
     ctx.fill();
   }
-  updateSnow();
+
 }
 function updateSnow(){
   for (let f of flakes){
@@ -273,7 +273,10 @@ function updateSnow(){
   }
 }
 
-
+/* lancer neige */
+initSnow();
+setInterval(drawSnow, 33);
+window.addEventListener("resize", initSnow);
 
 /* ========== UTILITAIRES ========== */
 /* Pour re-générer l'affichage si tu changes manuellement MODE_TEST / JOUR_SIMULE */
