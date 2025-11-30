@@ -283,3 +283,11 @@ setInterval(drawSnow, 33);
 window.addEventListener("resize", initSnow);
 
 
+/* ========== UTILITAIRES ========== */
+/* Pour re-générer l'affichage si tu changes manuellement MODE_TEST / JOUR_SIMULE */
+function rafraichir(){
+  genererFlocons();
+}
+
+/* expose pour console si besoin */
+window._calendrier = { genererFlocons, obtenirDateActuelle, rafraichir };
