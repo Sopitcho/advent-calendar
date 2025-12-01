@@ -5,7 +5,7 @@
 
 /* ========== CONFIG ========== */
 // URL de ton Apps Script (WebApp)
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxgIBgkQsqHIyk6VCTT2NyE800rwL2BSjrsRCnhNxCeyMCQtz52wjlC_PyMGIddwpzT/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzEMtA5tC5VpNjfljlFaD_CeZXRLMA25i9bmJykD1GwjkhIf8g5EwMGcgtuLHOC0-hQoQ/exec";
 
 // Heure d'ouverture (9h)
 const HEURE_OUVERTURE = 9;
@@ -197,10 +197,47 @@ document.getElementById("to-enigme").onclick = () => {
 
 /* envoi de la réponse vers Google Sheets (Apps Script) */
 document.getElementById("send-answer").onclick = async () => {
-  if (!inputReponse.value.trim()) {
-    msgReponse.textContent = "Entre une réponse.";
-    return;
-  }
+  if (!inputReponse.value.trim()) {
+    msgReponse.textContent = "Entre une réponse.";
+    return;
+  }
+
+  msgReponse.textContent = "Envoi en cours..."; // Feedback visuel
+
+  // 1. Créer les données dans un format Apps Script accepte nativement
+  const formData = new FormData();
+  formData.append('nom', inputNom.value.trim());
+  formData.append('jour', caseOuverte);
+  formData.append('reponse', inputReponse.value.trim());
+
+  try {
+    // 2. Utiliser fetch avec FormData : le navigateur gère l'encodage et les headers.
+    const res = await fetch(SCRIPT_URL, {
+      method: "POST",
+      // 💡 N'ajoutez PAS le Content-Type ici. Laissez le navigateur le faire pour FormData.
+      body: formData
+    });
+
+    const data = await res.json(); // Le script Apps Script doit renvoyer du JSON !
+
+    if (data.status === "already") {
+      msgReponse.textContent = "Tu as déjà répondu pour ce jour.";
+      return;
+    }
+    if (data.status === "ok") {
+      etapeEnigme.classList.add("hidden");
+      etapeFini.classList.remove("hidden");
+      const fl = document.querySelector(`.flake[data-jour='${caseOuverte}']`);
+      if (fl) { fl.classList.add("passe"); fl.style.pointerEvents = "none"; }
+      return;
+    }
+
+    msgReponse.textContent = "Erreur serveur: " + (data.message || "Réponse non standard.");
+  } catch (err) {
+    console.error("Erreur de connexion Apps Script:", err);
+    msgReponse.textContent = "Erreur de connexion (vérifie l'URL Apps Script et les logs).";
+  }
+};
 
  const payload = {
   nom: inputNom.value.trim(),
@@ -211,8 +248,7 @@ document.getElementById("send-answer").onclick = async () => {
   try {
     const res = await fetch(SCRIPT_URL, {
       method: "POST",
-      // 🚨 ABSOLUMENT 'text/plain' pour éviter la requête OPTIONS qui échoue
-      headers: {"Content-Type":"text/plain"}, 
+      headers: {"Content-Type":"text/plain"}, 
       body: JSON.stringify(payload)
     });
 
