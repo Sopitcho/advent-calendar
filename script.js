@@ -63,6 +63,14 @@ const POSITIONS = [
   {left:"66%", top:"54%"}
 ];
 
+function aDejaRepondu(jour) {
+  return localStorage.getItem("reponse_" + jour) === "true";
+}
+
+function enregistrerReponse(jour) {
+  localStorage.setItem("reponse_" + jour, "true");
+}
+
 /* ========== MODE TEST & ADMIN ========== */
 /* true = mode test activé (simule jour+heure). Mettre false en prod */
 let MODE_TEST = false;
@@ -191,6 +199,11 @@ function onFlakeClick(jour, element){
   etapeFini.classList.add("hidden");
 
   modal.classList.remove("hidden");
+  if (aDejaRepondu(jour)) {
+  alert("Tu as déjà répondu pour ce jour !");
+  return;
+}
+
 }
 
 /* bouton suivant -> afficher énigme */
@@ -250,6 +263,7 @@ document.getElementById("send-answer").onclick = async () => {
       return;
     }
     if (data.status === "ok") {
+      enregistrerReponse(caseOuverte);
       etapeEnigme.classList.add("hidden");
       etapeFini.classList.remove("hidden");
       const fl = document.querySelector(`.flake[data-jour='${caseOuverte}']`);
@@ -261,6 +275,7 @@ document.getElementById("send-answer").onclick = async () => {
   } catch (err) {
     console.error(err);
     msgReponse.textContent = "Réponse envoyée";
+    enregistrerReponse(caseOuverte);
   }
 
 };
@@ -314,6 +329,18 @@ if (ctx) { // Lancer la neige seulement si le contexte est valide
 /* Pour re-générer l'affichage si tu changes manuellement MODE_TEST / JOUR_SIMULE */
 function rafraichir(){
   genererFlocons();
+  function marquerFloconsDejaRepondus() {
+  JOURS.forEach(jour => {
+    if (aDejaRepondu(jour)) {
+      const fl = document.querySelector(`.flake[data-jour='${jour}']`);
+      if (fl) {
+        fl.classList.add("passe");
+        fl.style.pointerEvents = "none";
+      }
+    }
+  });
+}
+marquerFloconsDejaRepondus();
 }
 /* expose pour console si besoin */
 window._calendrier = { genererFlocons, obtenirDateActuelle, rafraichir };
