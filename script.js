@@ -8,7 +8,7 @@
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwTXH3IqpaQlFjhe2uRf0H8iZ-hE8j-tqJPEhRmDGhUzHt6yIqTuMqT3kFD9T5dlSyumw/exec";
 
 // Heure d'ouverture (9h)
-//const HEURE_OUVERTURE = 8;
+const HEURE_OUVERTURE = 9;
 
 // Jours (1..19 sans week-ends)
 const JOURS = [1,2,3,4,5,8,9,10,11,12,15,16,17,18,19];
