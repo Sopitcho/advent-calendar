@@ -202,11 +202,11 @@ document.getElementById("send-answer").onclick = async () => {
     return;
   }
 
-  const payload = {
-    name: inputNom.value.trim(),
-    day: caseOuverte,
-    answer: inputReponse.value.trim()
-  };
+ const payload = {
+  nom: inputNom.value.trim(),
+  jour: caseOuverte,
+  reponse: inputReponse.value.trim()
+};
 
   try {
     const res = await fetch(SCRIPT_URL, {
