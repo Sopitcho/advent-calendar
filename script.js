@@ -210,9 +210,10 @@ document.getElementById("send-answer").onclick = async () => {
 
   try {
     const res = await fetch(SCRIPT_URL, {
-      method: "POST",
-      headers: {"Content-Type":"application/json"},
-      body: JSON.stringify(payload)
+    method: "POST",
+    // 💡 Utiliser text/plain pour éviter la requête OPTIONS / le CORS
+    headers: {"Content-Type":"text/plain"}, 
+    body: JSON.stringify(payload)
     });
 
     const data = await res.json();
