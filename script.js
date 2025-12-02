@@ -28,6 +28,7 @@ const ENIGMES = {
   19:"Énigme 19..."
 };
 const INDICES = {
+  2: "Indice : Je ne suis pas un élève",
   3: "Indice :  ",
   4: "Indice : ",
   5: "Indice : ",
