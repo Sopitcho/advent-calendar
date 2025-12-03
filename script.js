@@ -16,7 +16,7 @@ const ENIGMES = {
   3:"En hiver, je porte souvent un bonnet, même s'il m'arrive de le perdre. Qui suis-je ?",
   4:" ",
   5:" ",
-  8:"",
+  8:" ",
   9:" ",
   10:" ",
   11:" ",
@@ -29,7 +29,7 @@ const ENIGMES = {
 };
 const INDICES = {
   2: "Indice : Je ne suis pas un élève",
-  3: "Indice : Je ne suis pas professeur, on m'appelle Mme..
+  3: "Indice : Je ne suis pas professeur, on m'appelle Mme..",
   5: "Indice : ",
   8: "Indice : ",
   9: "Indice : ",
